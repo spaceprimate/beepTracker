@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta content="width=device-width,initial-scale=1" name="viewport">
+<title>BEEPTRACKER</title>
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script>
+
+</script>
+</head>
+<body ng-app="estevezisms" id="body">
+
+
+<div class="container">
+  <div class="row">
+    
+    <div class="col-md-8 main col-md-offset-2">
+    	<div class="content">
+      
+		      <div ng-controller="estevezController as ctrl" class="ng-cloak text-center">
+		      	<h4>#{{ctrl.currentJoke.id}}</h4>
+		        <h3>{{ctrl.currentJoke.setup}}</h3>
+		        <div class="punchline">
+		        	<h1 ng-show="ctrl.showPunchline" > {{ctrl.currentJoke.punchline}}</h1>
+		        </div>
+		        
+		        <p ng-show="!ctrl.showPunchline"><button ng-click="ctrl.showPunchline = true"  class="btn-danger btn btn-lg show-punchline">
+		        	What?
+		        </button></p>
+		        
+		        <p ng-show="ctrl.showPunchline" ><button ng-click="ctrl.getJoke()" class="btn-warning btn btn-lg" >ANOTHER</button></p>
+		        <p ng-show="ctrl.reloadButton"><button ng-click="ctrl.reload()" class="btn-warning btn btn-xl">RELOAD</button></p>
+
+		        
+		      </div>
+      	</div>
+
+      	<div class="text-center"><a href="img/emilio.jpg"><img src="img/emilio.jpg" ></a></div>
+    </div>
+    
+</div>
+<footer class="footer"></footer>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+<script src="angular.min.js"></script> 
+<script src="bootstrap/js/bootstrap.min.js"></script> 
+<script src="tracker.js"></script> 
+<script src="app.js"></script> 
+
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+/*
+ * WHAT TO YOU CALL EMILIO ESTEVEZ SEARCHING FOR THE ONE RING?
+ */
+
+
+
+/* .col-lg - large desktops */
+@media (min-width: 1200px){
+
+}
+
+/* .col-md - small desktops */
+@media (max-width: 1199px){
+
+}
+/* .col-sm - tablets */
+@media (max-width: 991px){
+	
+}
+
+/* col-xs - phones*/
+@media (max-width: 767px){
+	.right-column{margin-top:48px;}
+}
+
+
+.ng-invalid.ng-dirty {
+	background: #fa787e;
+}
+.ng-valid.ng-dirty {
+	border-color:#78fa89;
+}
+.container img{max-width: 100%;}
+.main .content{margin: 50px 0; border-radius: 22px; background: #000; padding: 44px; min-height: 400px; border: 2px dashed #E91E63;}
+body{   background-color: #000000; background-image: url(../img/tile0.gif); background-repeat: repeat;
+    background-size: 420px;}
+
+body.tile0{ background-image: url(../img/tile0.gif);}
+body.tile1{background-image: url(../img/tile1.gif);}
+body.tile2{background-image: url(../img/tile2.gif);}
+body.tile3{background-image: url(../img/tile3.gif);}
+body.tile4{background-image: url(../img/tile4.gif);}
+body.tile5{background-image: url(../img/tile5.gif);}
+body .container{color: #ffffff;}
+footer.footer{height: 120px;}
+
+body .ng-cloak{display: none;}
+
+
+.punchline{min-height: 99px; padding-top:1px; }
+h3{color: #E91E63;}
+h1{color: #FFEB3B;}
+
+
+.btn-danger {
+    color: #000;
+    background-color: #00BCD4;
+    border-color: #E91E63;
+    border-width: 3px;
+    font-weight: 700;
+}
+
+.btn-warning {
+    color: #FFEB3B;
+    background-color: #673AB7;
+    border-color: #9C27B0;
+    border-width: 3px;
+    font-weight: 700;
+}
+
+/*
+ * EMILIO EPIC-QUESTEVEZ
+ */
