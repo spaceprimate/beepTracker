@@ -31,11 +31,12 @@ function beep(config) {
     var attack = config.attack,
         decay = config.decay,
         gain = audio.createGain(),
-        osc = audio.createOscillator();
+        osc = audio.createOscillator(),
+        maxGain = config.amplitude;
 
     gain.connect(audio.destination);
     gain.gain.setValueAtTime(0, audio.currentTime);
-    gain.gain.linearRampToValueAtTime(1, audio.currentTime + attack / 1000);
+    gain.gain.linearRampToValueAtTime(maxGain, audio.currentTime + attack / 1000);
     gain.gain.linearRampToValueAtTime(0, audio.currentTime + decay / 1000);
 
     osc.frequency.value = config.frequency;
@@ -57,13 +58,13 @@ function tracker (){
     this.tracks = [];
     this.beats = 15;
     this.curBeat = 0;
-    this.bpm = 200;
+    this.bpm = 60;
     this.isPlaying = false;
     //this.self = this;
     this.play = () => {
     	this.isPlaying = true;
         //var self = this;
-        this.timer = $interval( () => {this.playBeat();}, (60 / this.bpm * 1000) );
+        this.timer = $interval( () => {this.playBeat();}, (60 / this.bpm * 250) );
         //console.log("called: " + (tracker.bpm / 60 * 1000));
     },
     //this.stop = () => {clearInterval(this.timer)};
@@ -89,7 +90,7 @@ function tracker (){
         }
         else { this.curBeat++;}
     };
-    this.addTrack = (track) => {this.tracks.push(track);};
+    this.addTrack = (track) => {this.tracks.push(track); updateBeatWidth();};
 }
 
 tracker.prototype.getBlankTrack = () => {
@@ -99,7 +100,8 @@ tracker.prototype.getBlankTrack = () => {
             attack: 10,
             decay: 500,
             frequency: 440,
-            type: "sine"
+            type: "sine",
+            amplitude: .75
         }
     };
     return blankTrack;
@@ -177,6 +179,37 @@ tracker.prototype.importSong = () => {
 		floor: 0,
 		ceil: 1000
 	};
+	this.gainOptions =  {
+	    floor: 0,
+	    ceil: 1,
+	    step: 0.01,
+	    precision: 10
+	  };
+
+	this.attackOptions = {
+		minLimit: 0,
+		maxLimit: 2000,
+		step: 10,
+		floor: 0
+	,	ceil: 2000
+	};
+
+	this.decayOptions = {
+		minLimit: 0,
+		maxLimit: 2000,
+		step: 10,
+		floor: 0,
+		ceil: 2000
+	};
+
+
+	this.bpmOptions = {
+		minLimit: 0,
+		maxLimit: 300,
+		step: 1,
+		floor: 0,
+		ceil: 300
+	};
 
 	$scope.minSlider = {
 	    value: 10
@@ -196,20 +229,22 @@ tracker.prototype.importSong = () => {
 
 
 
-
+function updateBeatWidth(){
+	var beatWidth = $('.beat').width();
+	$( "body .beat" ).css('height', beatWidth);
+	console.log("called");
+}
 
 
 
 
 $( document ).ready(function() {
 	//make beat's height the same as width: 
-	var beatWidth = $('.beat').width();
-	$( "body .beat" ).height(beatWidth);
+	updateBeatWidth();
 
 	//and on resize
 	$( window ).resize(function() {
-		var beatWidth = $('.beat').width();
-		$( "body .beat" ).height(beatWidth);
+		updateBeatWidth();
 	});
 });
 

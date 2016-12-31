@@ -21,25 +21,47 @@
 
       
 	<div ng-controller="beepController as ctrl">
-		<div ng-repeat="track in ctrl.tracker.tracks" class="row">
+		<div ng-repeat="track in ctrl.tracker.tracks" class="row" ng-class="{'show-controls' : track.showControls}">
 			<div class="col-xs-1 control-toggle"><a href="#" ng-click="track.showControls = !track.showControls"><span class="glyphicon glyphicon-equalizer"></span></a></div>
 			<div class="col-xs-11">
 				<div ng-repeat="beat in track.beats" ng-click="beat.active = !beat.active" class="beat-wrapper" ng-class="{current : (ctrl.tracker.curBeat == $index && ctrl.tracker.isPlaying == true)}" >
 					<div class="beat" ng-class="{active : beat.active == true}"></div>
 				</div>
 			</div>
-			<div class="col-xs-12" ng-show="track.showControls">
-				<rzslider rz-slider-model="track.config.frequency" rz-slider-options="ctrl.freqOptions"></rzslider>
+			<div class="beep-controls" ng-show="track.showControls">
+				<div class="col-xs-1">FREQ:</div>
+				<div class="col-xs-5" >
+					<rzslider rz-slider-model="track.config.frequency" rz-slider-options="ctrl.freqOptions"></rzslider>
+				</div>
+				<div class="col-xs-1">GAIN:</div>
+				<div class="col-xs-5" >
+					<rzslider rz-slider-model="track.config.amplitude" rz-slider-options="ctrl.gainOptions"></rzslider>
+				</div>
+				<div class="col-xs-1">ATTACK:</div>
+				<div class="col-xs-5" >
+					<rzslider rz-slider-model="track.config.attack" rz-slider-options="ctrl.attackOptions"></rzslider>
+				</div>
+				<div class="col-xs-1">DECAY:</div>
+				<div class="col-xs-5" >
+					<rzslider rz-slider-model="track.config.decay" rz-slider-options="ctrl.decayOptions"></rzslider>
+				</div>
 			</div>
 			
 			
 		</div>
+		<div class="add-button"><a href="#" ng-click="ctrl.tracker.addTrack(ctrl.tracker.getBlankTrack())"><span class="glyphicon glyphicon-plus"></span></a></div>
 
-		<div style="margin-top:18px;">
-			<button ng-click="ctrl.tracker.stop()" class="btn btn-primary">stop</button>
-			<button ng-click="ctrl.tracker.play()"class="btn btn-primary">play</button>
+		<div class="row" style="margin-top:18px;">
+			<div class="col-xs-6">
+				<button ng-click="ctrl.tracker.stop()" class="btn btn-primary">stop</button>
+				<button ng-click="ctrl.tracker.play()"class="btn btn-primary">play</button>
+			</div>
+			<div class="col-xs-1 text-right" >BPM: </div>
+			<div class="col-xs-5">
+				<rzslider rz-slider-model="ctrl.tracker.bpm" rz-slider-options="ctrl.bpmOptions"></rzslider>
+			</div>
 		</div>
-		
+
 	</div>
       	
     
