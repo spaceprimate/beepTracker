@@ -28,6 +28,8 @@ function beep(config) {
 
 
 
+
+
 function tracker (){
     this.tracks = [];
     this.beats = 15;
@@ -36,18 +38,22 @@ function tracker (){
     //this.self = this;
     this.play = () => {
         //var self = this;
-        this.timer = setInterval( () => {this.playBeat();}, (60 / this.bpm * 1000) );
+        this.timer = $interval( () => {this.playBeat();}, (60 / this.bpm * 1000) );
         //console.log("called: " + (tracker.bpm / 60 * 1000));
     },
     this.stop = () => {clearInterval(this.timer)};
     this.playBeat = function() {
-        console.log("playbeat: ");
+       // console.log("playbeat: ");
         
         this.tracks.forEach((t) => {
-            if (t.beats[this.curBeat] == true){
-                console.log("config is: ");
-                console.log(t.config);
+            if (t.beats[this.curBeat].active == true){
+                //console.log("config is: ");
+                //console.log(t.config);
+                console.log("true");
                 beep(t.config);
+            }
+            else {
+                console.log("false");
             }
         });
         if (this.curBeat >= this.beats){
@@ -58,8 +64,35 @@ function tracker (){
     this.addTrack = (track) => {this.tracks.push(track);};
 }
 
+tracker.prototype.getBlankTrack = () => {
+    var blankTrack = {
+        beats: tracker.prototype.getBlankBeats(16),
+        config: {
+            attack: 10,
+            decay: 500,
+            frequency: 440,
+            type: "sine"
+        }
+    };
+    return blankTrack;
+};
+tracker.prototype.getBlankBeats = (numBeats) => {
+    var beats = [];
+    for (var i = 0; i < numBeats; i++) {
+        beats.push({
+            active: true
+        });
+    };
+    return beats;
+};
+
+tracker.prototype.importSong = () => {
+    //this should be implemented
+    //import a preformatted this.tracks
+};
 
 
+/*
 var testTrack = {
     beats: [true, false, false, true, false, false, true, false, false, false, true, false, false, true, true, true],
     config: {
@@ -118,16 +151,17 @@ var testTrack5 = {
     }
 }
 
-
+*/
 
 //Example
+/*
 var test = new tracker();
 test.addTrack(testTrack);
 test.addTrack(testTrack2);
 test.addTrack(testTrack3);
 test.addTrack(testTrack4);
 test.addTrack(testTrack5);
-
+*/
 
 
 
