@@ -1,0 +1,5 @@
+frequency formula for equal tempered scale:
+http://www.phy.mtu.edu/~suits/NoteFreqCalcs.html
+
+Octatonic Scale:
+https://en.wikipedia.org/wiki/Octatonic_scale
