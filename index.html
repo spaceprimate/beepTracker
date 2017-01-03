@@ -45,6 +45,16 @@
 				<div class="col-xs-5" >
 					<rzslider rz-slider-model="track.config.decay" rz-slider-options="ctrl.decayOptions"></rzslider>
 				</div>
+				<div class="col-xs-1">
+					WAVE:
+				</div>
+				<div class="col-xs-11">
+					<select ng-model="track.config.type">
+						<option value="sine">SINE</option>
+						<option value="square">SQUARE</option>
+						<option value="sawtooth">SAWTOOTH</option>
+					</select>
+				</div>
 			</div>
 			
 			

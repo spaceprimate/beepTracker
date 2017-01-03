@@ -124,3 +124,8 @@ body .btn.btn-primary:hover{background: #52ff28; color: #000;}
     margin-top:8px;
     padding-top: 8px;
     padding-bottom: 8px;}
+
+
+    select, select:focus{background: #000; border-color: #52ff28; outline: none;}
+    select option, select:focus option, select option:focus{outline: none; border-color: #52ff28;}
+    select option:hover{background: #52ff28; color: #000;}

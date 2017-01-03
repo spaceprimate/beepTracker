@@ -3,7 +3,7 @@
 var app = angular.module('beeps', ['rzModule']);
 
 //funky DEPENDENCY INJECTION service syntax wth angular?
-app.controller('beepController',  function($scope, $interval){
+app.controller('beepController',  function($scope, $interval, $timeout){
 
 
 	//var mySlider = $("input.slider").slider();
@@ -58,7 +58,7 @@ function tracker (){
     this.tracks = [];
     this.beats = 15;
     this.curBeat = 0;
-    this.bpm = 60;
+    this.bpm = 110;
     this.isPlaying = false;
     //this.self = this;
     this.play = () => {
@@ -90,7 +90,7 @@ function tracker (){
         }
         else { this.curBeat++;}
     };
-    this.addTrack = (track) => {this.tracks.push(track); updateBeatWidth();};
+    this.addTrack = (track) => {this.tracks.push(track); $timeout( () =>{updateBeatWidth()}, 20);};
 }
 
 tracker.prototype.getBlankTrack = () => {
@@ -232,7 +232,7 @@ tracker.prototype.importSong = () => {
 function updateBeatWidth(){
 	var beatWidth = $('.beat').width();
 	$( "body .beat" ).css('height', beatWidth);
-	console.log("called");
+	console.log("called update beat");
 }
 
 
