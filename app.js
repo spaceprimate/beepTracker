@@ -39,14 +39,37 @@ function beep(config) {
     gain.gain.linearRampToValueAtTime(maxGain, audio.currentTime + attack / 1000);
     gain.gain.linearRampToValueAtTime(0, audio.currentTime + decay / 1000);
 
+
+
     osc.frequency.value = config.frequency;
     osc.type = config.type;
     osc.connect(gain);
     osc.start(0);
+
+    if (config.modType != 'none'){
+        var gain2 = audio.createGain();
+        gain2.gain.value = 100;
+        gain2.connect(osc.frequency);
+        var osc2 = audio.createOscillator();
+        osc2.type = config.modType;
+        osc2.frequency.value = config.modFrequency;
+        osc2.connect(gain2);
+        osc2.start(0);
+
+    }
+
+    
+    
+
+
     setTimeout(function() {
         osc.stop(0);
         osc.disconnect(gain);
         gain.disconnect(audio.destination);
+        if (config.modType != 'none'){
+            osc2.stop(0);
+            gain2.disconnect(osc.frequency);
+        }
     }, decay);
 }
 
@@ -101,7 +124,9 @@ tracker.prototype.getBlankTrack = () => {
             decay: 500,
             frequency: 440,
             type: "sine",
-            amplitude: .75
+            amplitude: .75,
+            modType: "none",
+            modFrequency: 1
         }
     };
     return blankTrack;
@@ -196,12 +221,18 @@ tracker.prototype.importSong = () => {
 
 	this.decayOptions = {
 		minLimit: 0,
-		maxLimit: 2000,
+		maxLimit: 3000,
 		step: 10,
 		floor: 0,
-		ceil: 2000
+		ceil: 3000
 	};
 
+    this.modFreqOptions = {
+        step: 0.1,
+        floor: 0,
+        ceil: 200,
+        precision: 1
+    };
 
 	this.bpmOptions = {
 		minLimit: 0,
