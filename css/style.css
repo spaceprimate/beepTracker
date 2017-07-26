@@ -59,13 +59,16 @@ body .beat-wrapper{padding: 3px; display: block; float: left; width: 5.8%;}
 body .beat-wrapper.current{background: #082700;}
 
 
-body .note{
+body .notes{
     width: 100%;
     
     background: none;
     cursor: pointer;
     color: #fff;
-    border: 2px solid #125d00;}
+    border: 2px solid #125d00;
+}
+
+.notes a{display: block;}
 
 
 body a{color: #52ff28;}

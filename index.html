@@ -29,14 +29,14 @@
 				</div>
 				<div class="clearfix"></div>
 				<div ng-repeat="beat in track.beats" class="beat-wrapper">
-					<div class="beat" style="height: auto;">
-						<p><a href="#">a</a></p>
-						<p><a href="#">b</a></p>
-						<p><a href="#">c</a></p>
-						<p><a href="#">d</a></p>
-						<p><a href="#">e</a></p>
-						<p><a href="#">f</a></p>
-						<p><a href="#">g</a></p>
+					<div class="notes" style="height: auto;">
+						<p><a href="#" ng-click="beat.frequency = 300">a</a></p>
+						<p><a href="#" ng-click="beat.frequency = 200">b</a></p>
+						<p><a href="#" ng-click="beat.frequency = 100">c</a></p>
+						<p><a href="#" ng-click="beat.frequency = 0">d</a></p>
+						<p><a href="#" ng-click="beat.frequency = -100">e</a></p>
+						<p><a href="#" ng-click="beat.frequency = -200">f</a></p>
+						<p><a href="#" ng-click="beat.frequency = -300">g</a></p>
 					</div>
 				</div>
 				<div class="clearfix"></div>

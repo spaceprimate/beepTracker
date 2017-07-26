@@ -26,8 +26,12 @@ var audio = new window.AudioContext();
 */
 
 
-
-function beep(config) {
+/**
+ * 
+ * @param {*} config - settings for this track
+ * @param {*} freq - frequency adjustment for this beat
+ */
+function beep(config, freq) {
     var attack = config.attack,
         decay = config.decay,
         gain = audio.createGain(),
@@ -40,8 +44,8 @@ function beep(config) {
     gain.gain.linearRampToValueAtTime(0, audio.currentTime + decay / 1000);
 
 
-
-    osc.frequency.value = config.frequency;
+    console.log("config: " + config.frequency + ", freq: " + freq);
+    osc.frequency.value = config.frequency + freq;
     osc.type = config.type;
     osc.connect(gain);
     osc.start(0);
@@ -102,7 +106,7 @@ function tracker (){
                 //console.log("config is: ");
                 //console.log(t.config);
                 console.log("true");
-                beep(t.config);
+                beep(t.config, t.beats[this.curBeat].frequency);
             }
             else {
                 console.log("false");
@@ -131,11 +135,14 @@ tracker.prototype.getBlankTrack = () => {
     };
     return blankTrack;
 };
+
+//define beats here I guess?
 tracker.prototype.getBlankBeats = (numBeats) => {
     var beats = [];
     for (var i = 0; i < numBeats; i++) {
         beats.push({
-            active: false
+            active: false,
+            frequency: 0
         });
     };
     return beats;
