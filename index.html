@@ -27,6 +27,20 @@
 				<div ng-repeat="beat in track.beats" ng-click="beat.active = !beat.active" class="beat-wrapper" ng-class="{current : (ctrl.tracker.curBeat == $index && ctrl.tracker.isPlaying == true)}" >
 					<div class="beat" ng-class="{active : beat.active == true}"></div>
 				</div>
+				<div class="clearfix"></div>
+				<div ng-repeat="beat in track.beats" class="beat-wrapper">
+					<div class="beat" style="height: auto;">
+						<p><a href="#">a</a></p>
+						<p><a href="#">b</a></p>
+						<p><a href="#">c</a></p>
+						<p><a href="#">d</a></p>
+						<p><a href="#">e</a></p>
+						<p><a href="#">f</a></p>
+						<p><a href="#">g</a></p>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+
 			</div>
 			<div class="beep-controls" ng-show="track.showControls">
 				<div class="col-xs-6">
