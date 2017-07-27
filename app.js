@@ -140,10 +140,12 @@ tracker.prototype.getBlankTrack = () => {
 tracker.prototype.getBlankBeats = (numBeats) => {
     var beats = [];
     for (var i = 0; i < numBeats; i++) {
-        beats.push({
-            active: false,
-            frequency: 0
-        });
+        // beats.push({
+        //     active: false,
+        //     frequency: 0
+        // });
+
+        beats.push( new beat() );
     };
     return beats;
 };
@@ -152,6 +154,23 @@ tracker.prototype.importSong = () => {
     //this should be implemented
     //import a preformatted this.tracks
 };
+
+
+function beat(){
+    this.active = false;
+    this.frequency = 0;
+}
+beat.prototype.updateFreq = function(f) {
+    console.log("frequency before: " + this.frequency);
+    console.log("this is: ");
+    console.log(this);
+    this.frequency = f;
+    console.log("mullato butts? f is: " + f);
+    console.log("did freq update? is: " + this.frequency);
+};
+
+console.log("reassure me again!");
+
 
 
 
