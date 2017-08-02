@@ -1,32 +1,17 @@
-
-
 var app = angular.module('beeps', ['rzModule']);
 
 //funky DEPENDENCY INJECTION service syntax wth angular?
 app.controller('beepController',  function($scope, $interval, $timeout){
 
 
-	//var mySlider = $("input.slider").slider();
-	
-
-
-
-
-
-/* ------------------------------------------------------------------------------------------------------------------------------------ */
-
-
-
 
 var audio = new window.AudioContext();
 
-/*
+/** 
+ * makes a beep sound
+ * 
  * config object has the following: 
  * attack, decay, frequency, type
-*/
-
-
-/**
  * 
  * @param {*} config - settings for this track
  * @param {*} freq - frequency adjustment for this beat
@@ -62,10 +47,6 @@ function beep(config, freq) {
 
     }
 
-    
-    
-
-
     setTimeout(function() {
         osc.stop(0);
         osc.disconnect(gain);
@@ -83,8 +64,8 @@ function beep(config, freq) {
 
 function tracker (){
     this.tracks = [];
-    this.beats = 15;
-    this.curBeat = 0;
+    //this.beats = 15; // move to track
+    //this.curBeat = 0; // move to track
     this.bpm = 110;
     this.isPlaying = false;
     //this.self = this;
@@ -95,67 +76,72 @@ function tracker (){
         //console.log("called: " + (tracker.bpm / 60 * 1000));
     },
     //this.stop = () => {clearInterval(this.timer)};
-    this.stop = () => {$interval.cancel(this.timer); this.isPlaying = false;};
+    this.stop = () => {
+        $interval.cancel(this.timer);
+        this.isPlaying = false;
+        this.tracks.forEach( (t) => {
+            t.curBeat = 1;
+        });
+    };
 
+
+    //loops through tracks to play, then increment, each track's current beat
     this.playBeat = function() {
-       // console.log("playbeat: ");
-       console.log(this.curBeat);
-        
         this.tracks.forEach((t) => {
-            if (t.beats[this.curBeat].active == true){
-                //console.log("config is: ");
-                //console.log(t.config);
-                console.log("true");
-                beep(t.config, t.beats[this.curBeat].frequency);
+            console.log("beat");
+            console.log(t);
+            var i = t.curBeat - 1;
+            if (t.beats[i].active == true){
+
+                beep(t.config, t.beats[i].frequency);
+            }
+
+            if (t.curBeat == t.beats.length){
+                t.curBeat = 1;
             }
             else {
-                console.log("false");
+                t.curBeat++;
             }
         });
-        if (this.curBeat >= this.beats){
-            this.curBeat = 0;
-        }
-        else { this.curBeat++;}
+        
     };
-    this.addTrack = (track) => {this.tracks.push(track); $timeout( () =>{updateBeatWidth()}, 20);};
+
+    //add a new track to tracks array
+    this.addTrack = (track) => {
+        this.tracks.push(track); 
+        $timeout( () =>{updateBeatWidth()}, 20);
+    };
 }
 
-tracker.prototype.getBlankTrack = () => {
-    var blankTrack = {
-        beats: tracker.prototype.getBlankBeats(16),
-        config: {
-            attack: 10,
-            decay: 500,
-            frequency: 440,
-            type: "sine",
-            amplitude: .75,
-            modType: "none",
-            modFrequency: 1
-        }
+/*  ============================================================================================================================================
+    ============================================================================================================================================
+    TRACK CONSTRUCTOR
+    ============================================================================================================================================
+    ============================================================================================================================================
+*/
+function track(numBeats){
+    this.config = {
+        attack: 10,
+        decay: 500,
+        frequency: 440,
+        type: "sine",
+        amplitude: .75,
+        modType: "none",
+        modFrequency: 1
     };
-    return blankTrack;
-};
-
-//define beats here I guess?
-tracker.prototype.getBlankBeats = (numBeats) => {
-    var beats = [];
+    this.beats = [];
     for (var i = 0; i < numBeats; i++) {
-        // beats.push({
-        //     active: false,
-        //     frequency: 0
-        // });
-
-        beats.push( new beat() );
+        this.beats.push( new beat() );
     };
-    return beats;
-};
+    this.curBeat = 1;
+}
 
-tracker.prototype.importSong = () => {
-    //this should be implemented
-    //import a preformatted this.tracks
-};
-
-
+/*  ============================================================================================================================================
+    ============================================================================================================================================
+    BEAT CONSTRUCTOR
+    ============================================================================================================================================
+    ============================================================================================================================================
+*/
 function beat(){
     this.active = false;
     this.frequency = 0;
@@ -175,54 +161,23 @@ console.log("reassure me again!");
 
 
 
-
-
-
-/* ------------------------------------------------------------------------------------------------------------------------------------ */
-
-
-
-
-
-
-
-
-
-
-	
-	//this.curBeat = this.tracker.curBeat;
-	//this.tracker.play();
-
-	//var scope = this;
+/*  ============================================================================================================================================
+    ============================================================================================================================================
+    INIT
+    ============================================================================================================================================
+    ============================================================================================================================================
+*/
 	this.curBeat = 0;
-
-
-	//$interval(() => {console.log("test panges");}, 500);
-	//scope.counter = 0;
-
 	this.tracker = new tracker();
-	this.tracker.addTrack(this.tracker.getBlankTrack());
-	this.tracker.addTrack(this.tracker.getBlankTrack());
-	this.tracker.addTrack(this.tracker.getBlankTrack());
 
-	/*
-	$scope.$watch('this.tracker.tracks', function(newValue, oldValue) {
-	  this.curBeat = this.curBeat + 1;
-	  console.log("blarlksjdf");
-	});
-	*/
-
-	//expect(scope.counter).toEqual(0);
-	//this.$watch('tracker', function(newValue, oldValue) {
-	  //scope.curBeat = scope.curBeat + 1;
-	//});
+    this.tracker.addTrack( new track(4) );
+    this.tracker.addTrack( new track(5) );
+    this.tracker.addTrack( new track(7) );
+    this.tracker.addTrack( new track(16) );
+    this.tracker.addTrack( new track(13) );
 
 
-
-
-
-	this.test = () => {console.log(this.tracker.tracks);};
-
+    //set all the slider options
 	this.freqOptions = {
 		minLimit: 0,
 		maxLimit: 1000,
@@ -272,28 +227,18 @@ console.log("reassure me again!");
 	    value: 10
 	  };
 
-
-
-
-
-
-
-
 //end beepController
 } );
 
 
 
 
-
+// code to update beat's css width (required for mobile to have perfectly circular, css generated beats, which is apparently important)
 function updateBeatWidth(){
 	var beatWidth = $('.beat').width();
 	$( "body .beat" ).css('height', beatWidth);
 	console.log("called update beat");
 }
-
-
-
 
 $( document ).ready(function() {
 	//make beat's height the same as width: 
@@ -304,7 +249,3 @@ $( document ).ready(function() {
 		updateBeatWidth();
 	});
 });
-
-
-
-
