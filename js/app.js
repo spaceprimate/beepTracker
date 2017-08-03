@@ -72,7 +72,8 @@ function tracker (){
     this.play = () => {
     	this.isPlaying = true;
         //var self = this;
-        this.timer = $interval( () => {this.playBeat();}, (60 / this.bpm * 250) );
+        this.playBeat();
+        // this.timer = $interval( () => {this.playBeat();}, (60 / this.bpm * 250) );
         //console.log("called: " + (tracker.bpm / 60 * 1000));
     },
     //this.stop = () => {clearInterval(this.timer)};
@@ -80,29 +81,36 @@ function tracker (){
         $interval.cancel(this.timer);
         this.isPlaying = false;
         this.tracks.forEach( (t) => {
-            t.curBeat = 1;
+            t.curBeat = 0;
         });
     };
 
 
     //loops through tracks to play, then increment, each track's current beat
     this.playBeat = function() {
-        this.tracks.forEach((t) => {
-            console.log("beat");
-            console.log(t);
-            var i = t.curBeat - 1;
-            if (t.beats[i].active == true){
+        if (this.isPlaying){
+            this.tracks.forEach((t) => {
+                console.log("beat");
+                console.log(t);
+                if (t.curBeat == t.beats.length){
+                    t.curBeat = 1;
+                }
+                else {
+                    t.curBeat++;
+                }
+                var i = t.curBeat - 1;
+                if (t.beats[i].active == true){
 
-                beep(t.config, t.beats[i].frequency);
-            }
+                    beep(t.config, t.beats[i].frequency);
+                }
 
-            if (t.curBeat == t.beats.length){
-                t.curBeat = 1;
-            }
-            else {
-                t.curBeat++;
-            }
-        });
+                
+            });
+
+        
+            this.timer = $timeout( () => {this.playBeat();}, (60 / this.bpm * 250) );
+        }
+        
         
     };
 
@@ -133,7 +141,7 @@ function track(numBeats){
     for (var i = 0; i < numBeats; i++) {
         this.beats.push( new beat() );
     };
-    this.curBeat = 1;
+    this.curBeat = 0;
 }
 
 /*  ============================================================================================================================================
