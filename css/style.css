@@ -118,7 +118,7 @@ body .notes .key.active{ background: #22ff00;}
 
 body a{color: #52ff28;}
 
-body .control-toggle a{color: #126900; font-size: 22px;}
+body .control-toggle a, body .control-toggle div.pointer{color: #126900; font-size: 22px;}
 body .control-toggle {padding-top: 8px;}
 
 
@@ -191,3 +191,6 @@ body .btn.btn-primary:hover{background: #52ff28; color: #000;}
     select, select:focus{background: #000; border-color: #52ff28; outline: none;}
     select option, select:focus option, select option:focus{outline: none; border-color: #52ff28;}
     select option:hover{background: #52ff28; color: #000;}
+
+.inline-block{display: inline-block;}
+.pointer{cursor: pointer;}
