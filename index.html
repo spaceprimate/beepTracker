@@ -22,33 +22,38 @@
       
 	<div ng-controller="beepController as ctrl">
 		<div ng-repeat="track in ctrl.tracker.tracks" class="row" ng-class="{'show-controls' : track.showControls}">
-			<div>{{track.curBeat}}</div>
+			
 			<div class="col-xs-1 control-toggle"><div class="pointer" ng-click="track.showControls = !track.showControls"><span class="glyphicon glyphicon-equalizer"></span></div></div>
 			<div class="col-xs-11">
 				<div ng-repeat="beat in track.beats" ng-click="beat.active = !beat.active" class="beat-wrapper" ng-class="{current : (track.curBeat -1 == $index  && ctrl.tracker.isPlaying == true)}" >
 					<div class="beat" ng-class="{active : beat.active == true}"></div>
 				</div>
 				<div class="clearfix"></div>
-				<div ng-repeat="beat in track.beats" class="note-wrapper">
-					<div class="notes" >
-						<div ng-click="beat.updateFreq(300)" 	class="key b" 	ng-class="{active : beat.frequency == 300}"></div>
-						<div ng-click="beat.updateFreq(250)" 	class="key bf"	ng-class="{active : beat.frequency == 250}"></div>
-						<div ng-click="beat.updateFreq(200)"	class="key a"	ng-class="{active : beat.frequency == 200}"></div>
-						<div ng-click="beat.updateFreq(150)" 	class="key af"	ng-class="{active : beat.frequency == 150}"></div>
-						<div ng-click="beat.updateFreq(100)" 	class="key g"	ng-class="{active : beat.frequency == 100}"></div>
-						<div ng-click="beat.updateFreq(50)" 	class="key gf"	ng-class="{active : beat.frequency == 50}"></div>
-						<div ng-click="beat.updateFreq(0)" 		class="key f"	ng-class="{active : beat.frequency == 0}"></div>
-						<div ng-click="beat.updateFreq(-50)" 	class="key e"	ng-class="{active : beat.frequency == -50}"></div>
-						<div ng-click="beat.updateFreq(-100)" 	class="key ef"	ng-class="{active : beat.frequency == -100}"></div>
-						<div ng-click="beat.updateFreq(-150)" 	class="key d"	ng-class="{active : beat.frequency == -150}"></div>
-						<div ng-click="beat.updateFreq(-200)" 	class="key df"	ng-class="{active : beat.frequency == -200}"></div>
-						<div ng-click="beat.updateFreq(-250)" 	class="key c"	ng-class="{active : beat.frequency == -250}"></div>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-
 			</div>
 			<div class="beep-controls" ng-show="track.showControls">
+				<div class="col-xs-1">
+					BEATS<br>
+					<select ng-model="track.numBeats" ng-options="i as i for i in ctrl.numBeatArr" ng-change="track.updateNumBeats()">
+					</select>
+				</div>
+				<div class="note-wrapper-container col-xs-11">
+					<div ng-repeat="beat in track.beats" class="note-wrapper">
+						<div class="notes" >
+							<div ng-mouseover="beat.mouseOver(300)" ng-click="beat.updateFreq(300)" 	class="key b" 	ng-class="{active : beat.active == true && beat.frequency == 300}"></div>
+							<div ng-mouseover="beat.mouseOver(250)" ng-click="beat.updateFreq(250)" 	class="key bf"	ng-class="{active : beat.active == true && beat.frequency == 250}"></div>
+							<div ng-mouseover="beat.mouseOver(200)" ng-click="beat.updateFreq(200)"	class="key a"	ng-class="{active : beat.active == true && beat.frequency == 200}"></div>
+							<div ng-mouseover="beat.mouseOver(150)" ng-click="beat.updateFreq(150)" 	class="key af"	ng-class="{active : beat.active == true && beat.frequency == 150}"></div>
+							<div ng-mouseover="beat.mouseOver(100)" ng-click="beat.updateFreq(100)" 	class="key g"	ng-class="{active : beat.active == true && beat.frequency == 100}"></div>
+							<div ng-mouseover="beat.mouseOver(50)" ng-click="beat.updateFreq(50)" 	class="key gf"	ng-class="{active : beat.active == true && beat.frequency == 50}"></div>
+							<div ng-mouseover="beat.mouseOver(0)" ng-click="beat.updateFreq(0)" 		class="key f"	ng-class="{active : beat.active == true && beat.frequency == 0}"></div>
+							<div ng-mouseover="beat.mouseOver(-50)" ng-click="beat.updateFreq(-50)" 	class="key e"	ng-class="{active : beat.active == true && beat.frequency == -50}"></div>
+							<div ng-mouseover="beat.mouseOver(-100)" ng-click="beat.updateFreq(-100)" 	class="key ef"	ng-class="{active : beat.active == true && beat.frequency == -100}"></div>
+							<div ng-mouseover="beat.mouseOver(-150)" ng-click="beat.updateFreq(-150)" 	class="key d"	ng-class="{active : beat.active == true && beat.frequency == -150}"></div>
+							<div ng-mouseover="beat.mouseOver(-200)" ng-click="beat.updateFreq(-200)" 	class="key df"	ng-class="{active : beat.active == true && beat.frequency == -200}"></div>
+							<div ng-mouseover="beat.mouseOver(-250)" ng-click="beat.updateFreq(-250)" 	class="key c"	ng-class="{active : beat.active == true && beat.frequency == -250}"></div>
+						</div>
+					</div>
+				</div>
 				<div class="col-xs-6">
 					<div class="row">
 						<div class="col-xs-2">FREQ:</div>

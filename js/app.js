@@ -142,7 +142,18 @@ function track(numBeats){
         this.beats.push( new beat() );
     };
     this.curBeat = 0;
+    this.numBeats = numBeats;
 }
+track.prototype.updateNumBeats = function(){
+    if(this.numBeats >= this.beats.length + 1){
+        for (i = this.beats.length+1; i <= this.numBeats; i++){
+            this.beats.push( new beat() );
+        }
+    }
+    else{
+        this.beats = this.beats.slice(0, this.numBeats);
+    }
+};
 
 /*  ============================================================================================================================================
     ============================================================================================================================================
@@ -155,18 +166,37 @@ function beat(){
     this.frequency = 0;
 }
 beat.prototype.updateFreq = function(f) {
-    console.log("frequency before: " + this.frequency);
-    console.log("this is: ");
-    console.log(this);
-    this.frequency = f;
-    console.log("mullato butts? f is: " + f);
-    console.log("did freq update? is: " + this.frequency);
+    if (this.frequency == f){
+        this.active = !this.active;
+    }
+    else{
+        this.frequency = f;
+        this.active = true;
+    }
+    
 };
 
-console.log("reassure me again!");
+var mouseDown = false;
+document.body.onmousedown = function() { 
+  mouseDown = true;
+}
+document.body.onmouseup = function() {
+  mouseDown = false;
+}
 
+beat.prototype.mouseOver = function(f) {
+    if(mouseDown){
+        this.frequency = f;
+        this.active = true;
+    }
+    
+};
 
-
+this.numBeatArr = [];
+for (var i = 1; i <= 64; i++){
+    this.numBeatArr[i-1] = i;
+}
+console.log(this.numBeatArr);
 
 
 /*  ============================================================================================================================================
@@ -179,10 +209,10 @@ console.log("reassure me again!");
 	this.tracker = new tracker();
 
     this.tracker.addTrack( new track(4) );
-    this.tracker.addTrack( new track(5) );
-    this.tracker.addTrack( new track(7) );
-    this.tracker.addTrack( new track(16) );
-    this.tracker.addTrack( new track(13) );
+    this.tracker.addTrack( new track(12) );
+    this.tracker.addTrack( new track(17) );
+    this.tracker.addTrack( new track(31) );
+    this.tracker.addTrack( new track(22) );
 
 
     //set all the slider options
