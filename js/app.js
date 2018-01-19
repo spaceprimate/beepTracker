@@ -85,6 +85,27 @@ function tracker (){
         });
     };
 
+    this.tempTracks;
+
+    this.saveTracks = () => {
+        // this.tempTracker = Object.assign({}, this.tracker);
+        // let newObj = JSON.parse(JSON.stringify(obj));
+        this.tempTracks = JSON.parse(JSON.stringify(this.tracks));
+        
+    };
+
+    this.loadTracks = () => {
+        this.tracks = [];
+        //this.tracks = JSON.parse(JSON.stringify(this.tempTracks));
+        console.log(this.tempTracks);
+    };
+
+    this.clearTracks = () => {
+        this.tracks = [];
+    }
+
+    
+
 
     //loops through tracks to play, then increment, each track's current beat
     this.playBeat = function() {
@@ -119,6 +140,18 @@ function tracker (){
         this.tracks.push(track); 
         $timeout( () =>{updateBeatWidth()}, 20);
     };
+
+    // this.getBlankTrack = () => {
+        
+    // }
+
+    
+
+    this.removeTrack = (index) => {
+        this.tracks.splice(index, 1);
+    };
+
+
 }
 
 /*  ============================================================================================================================================
@@ -214,6 +247,12 @@ console.log(this.numBeatArr);
     this.tracker.addTrack( new track(31) );
     this.tracker.addTrack( new track(22) );
 
+    this.getBlankTrack = () => {
+        return new track(16);
+    };
+
+
+
 
     //set all the slider options
 	this.freqOptions = {
@@ -263,7 +302,11 @@ console.log(this.numBeatArr);
 
 	$scope.minSlider = {
 	    value: 10
-	  };
+    };
+
+    this.tempTracker = {};
+
+
 
 //end beepController
 } );

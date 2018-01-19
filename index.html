@@ -16,11 +16,16 @@
 </head>
 <body ng-app="beeps" id="body">
 
-<header class="header"></header>
+<header class="header">
+	
+</header>
 <div class="container">
 
       
 	<div ng-controller="beepController as ctrl">
+			<span style="color:pink" id="save-tracks" ng-click="ctrl.tracker.saveTracks()">save</span>
+			<span style="color:pink" id="save-tracks" ng-click="ctrl.tracker.loadTracks()">load</span>
+			<span style="color:pink" id="save-tracks" ng-click="ctrl.tracker.clearTracks()">clear</span>
 		<div ng-repeat="track in ctrl.tracker.tracks" class="row" ng-class="{'show-controls' : track.showControls}">
 			
 			<div class="col-xs-1 control-toggle"><div class="pointer" ng-click="track.showControls = !track.showControls"><span class="glyphicon glyphicon-equalizer"></span></div></div>
@@ -123,7 +128,7 @@
 			
 			
 		</div>
-		<div class="add-button"><a href="#" ng-click="ctrl.tracker.addTrack(ctrl.tracker.getBlankTrack())"><span class="glyphicon glyphicon-plus"></span></a></div>
+		<div class="add-button"><a href="#" ng-click="ctrl.tracker.addTrack( ctrl.getBlankTrack() )"><span class="glyphicon glyphicon-plus"></span></a></div>
 
 		<div class="row" style="margin-top:18px;">
 			<div class="col-xs-6">
