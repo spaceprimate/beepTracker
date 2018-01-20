@@ -39,6 +39,18 @@ body{   background-color: #000000; }
 
 .header{height: 60px;}
 
+.nav > li > a:hover {
+    text-decoration: none;
+    color: #000;
+    background-color: #22ff00;
+}
+
+.nav > li > a:focus {
+    text-decoration: none;
+    color: #22ff00;
+    background-color: #000;
+}
+
 
 body .beat{border-radius: 50%;
     width: 100%; 

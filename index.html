@@ -16,16 +16,28 @@
 </head>
 <body ng-app="beeps" id="body">
 
-<header class="header">
-	
-</header>
-<div class="container">
+
+
 
       
-	<div ng-controller="beepController as ctrl">
-			<span style="color:pink" id="save-tracks" ng-click="ctrl.tracker.saveTracks()">save</span>
-			<span style="color:pink" id="save-tracks" ng-click="ctrl.tracker.loadTracks()">load</span>
-			<span style="color:pink" id="save-tracks" ng-click="ctrl.tracker.clearTracks()">clear</span>
+<div ng-controller="beepController as ctrl">
+		<header class="header navbar" >
+			<div class="container">
+				<ul class="nav navbar navbar-nav">
+					<li>
+						<a ng-click="ctrl.saveTracker()" href="#">save</a>
+					</li>
+					<li>
+						<a ng-click="ctrl.loadTracker(ctrl.tempTracker)" href="#">load</a>
+					</li>
+					<li>
+						<a ng-click="ctrl.tracker.clearTracks()" href="#">clear</a>
+					</li>
+				</ul>
+			</div>
+		</header>
+	<div class="container">
+			
 		<div ng-repeat="track in ctrl.tracker.tracks" class="row" ng-class="{'show-controls' : track.showControls}">
 			
 			<div class="col-xs-1 control-toggle"><div class="pointer" ng-click="track.showControls = !track.showControls"><span class="glyphicon glyphicon-equalizer"></span></div></div>
@@ -128,7 +140,7 @@
 			
 			
 		</div>
-		<div class="add-button"><a href="#" ng-click="ctrl.tracker.addTrack( ctrl.getBlankTrack() )"><span class="glyphicon glyphicon-plus"></span></a></div>
+		<div class="add-button"><a href="#" ng-click="ctrl.tracker.addTrack( ctrl.getBlankTrack(16) )"><span class="glyphicon glyphicon-plus"></span></a></div>
 
 		<div class="row" style="margin-top:18px;">
 			<div class="col-xs-6">

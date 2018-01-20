@@ -85,28 +85,6 @@ function tracker (){
         });
     };
 
-    this.tempTracks;
-
-    this.saveTracks = () => {
-        // this.tempTracker = Object.assign({}, this.tracker);
-        // let newObj = JSON.parse(JSON.stringify(obj));
-        this.tempTracks = JSON.parse(JSON.stringify(this.tracks));
-        
-    };
-
-    this.loadTracks = () => {
-        this.tracks = [];
-        //this.tracks = JSON.parse(JSON.stringify(this.tempTracks));
-        console.log(this.tempTracks);
-    };
-
-    this.clearTracks = () => {
-        this.tracks = [];
-    }
-
-    
-
-
     //loops through tracks to play, then increment, each track's current beat
     this.playBeat = function() {
         if (this.isPlaying){
@@ -144,8 +122,38 @@ function tracker (){
     // this.getBlankTrack = () => {
         
     // }
+    // this.getTrackerConfig = () => {
+    //     return {
+    //         tracks: this.getTracksData(),
+    //         bpm: this.bpm
+    //     }
+    // };
 
-    
+
+    this.getBpm = () => {
+        return this.bpm;
+    };
+
+    this.getTracksData = () => {
+        return JSON.parse(JSON.stringify(this.tracks));
+    };
+
+    this.loadTracks = (config) => {
+        this.bpm = config.bpm;
+        this.clearTracks();
+        config.tracks.forEach((t, index) => {
+            this.addTrack(new track(t.beats.length));
+            this.tracks[index].config = t.config;
+            t.beats.forEach((beat, i) => {
+                this.tracks[index].beats[i].active = beat.active;
+                this.tracks[index].beats[i].frequency = beat.frequency;
+            });
+        });
+    };
+
+    this.clearTracks = () => {
+        this.tracks = [];
+    }
 
     this.removeTrack = (index) => {
         this.tracks.splice(index, 1);
@@ -247,9 +255,10 @@ console.log(this.numBeatArr);
     this.tracker.addTrack( new track(31) );
     this.tracker.addTrack( new track(22) );
 
-    this.getBlankTrack = () => {
-        return new track(16);
-    };
+    this.getBlankTrack = function(numBeats)  {
+        return new track(numBeats);
+    }
+    // this.getBlankTrack = getBlankTrack;
 
 
 
@@ -307,6 +316,19 @@ console.log(this.numBeatArr);
     this.tempTracker = {};
 
 
+    this.loadTracker = (config) => {
+
+        this.tracker.loadTracks(config);
+        
+    };
+
+    this.saveTracker = () => {
+        var config = {
+            tracks: this.tracker.getTracksData(),
+            bpm: this.tracker.getBpm()
+        };
+        this.tempTracker = config;
+    };  
 
 //end beepController
 } );
