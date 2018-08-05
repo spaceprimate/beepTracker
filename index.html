@@ -39,7 +39,7 @@
 	<div class="container">
 			
 		<div ng-repeat="track in ctrl.tracker.tracks" class="row" ng-class="{'show-controls' : track.showControls}">
-			
+			<div class="close-controls" ng-click="ctrl.tracker.removeTrack($index)"><span class="glyphicon glyphicon-remove" ></span></div>
 			<div class="col-xs-1 control-toggle"><div class="pointer" ng-click="track.showControls = !track.showControls"><span class="glyphicon glyphicon-equalizer"></span></div></div>
 			<div class="col-xs-11">
 				<div ng-repeat="beat in track.beats" ng-click="beat.active = !beat.active" class="beat-wrapper" ng-class="{current : (track.curBeat -1 == $index  && ctrl.tracker.isPlaying == true)}" >

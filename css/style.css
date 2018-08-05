@@ -197,7 +197,30 @@ body .btn.btn-primary:hover{background: #52ff28; color: #000;}
     margin-bottom: 8px;
     margin-top:8px;
     padding-top: 8px;
-    padding-bottom: 8px;}
+    padding-bottom: 8px;
+    position: relative;
+}
+
+.close-controls{display: none;}
+.show-controls .close-controls{
+        position: absolute;
+    right: -1px;
+    top: -1px;
+    padding: 3px 4px;
+    border: 1px solid #125d00;
+    border-radius: 0 8px;
+    display: block;
+    font-size: 10px;
+    color: #1e800f;
+    z-index: 90000;
+
+}
+.show-controls .close-controls:hover{
+    background: #1e800f;
+    color: black;
+}
+
+
 
 
     select, select:focus{background: #000; border-color: #52ff28; outline: none;}

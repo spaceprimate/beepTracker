@@ -3,8 +3,6 @@ var app = angular.module('beeps', ['rzModule']);
 //funky DEPENDENCY INJECTION service syntax wth angular?
 app.controller('beepController',  function($scope, $interval, $timeout){
 
-
-
 var audio = new window.AudioContext();
 
 /** 
@@ -28,8 +26,7 @@ function beep(config, freq) {
     gain.gain.linearRampToValueAtTime(maxGain, audio.currentTime + attack / 1000);
     gain.gain.linearRampToValueAtTime(0, audio.currentTime + decay / 1000);
 
-
-    console.log("config: " + config.frequency + ", freq: " + freq);
+    // console.log("config: " + config.frequency + ", freq: " + freq);
     osc.frequency.value = config.frequency + freq;
     osc.type = config.type;
     osc.connect(gain);
@@ -57,8 +54,6 @@ function beep(config, freq) {
         }
     }, decay);
 }
-
-
 
 
 

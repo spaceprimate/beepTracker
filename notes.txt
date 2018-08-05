@@ -3,3 +3,11 @@ http://www.phy.mtu.edu/~suits/NoteFreqCalcs.html
 
 Octatonic Scale:
 https://en.wikipedia.org/wiki/Octatonic_scale
+
+
+
+modules: 
+
+track
+
+beat
