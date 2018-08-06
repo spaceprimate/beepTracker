@@ -1,7 +1,8 @@
-var app = angular.module('beeps', ['rzModule']);
+var app = angular.module('beeps', ['rzModule', 'ngCookies']);
 
 //funky DEPENDENCY INJECTION service syntax wth angular?
-app.controller('beepController',  function($scope, $interval, $timeout){
+app.controller('beepController', ['$scope', '$cookies', '$interval', '$timeout', '$http', function($scope, $cookies, $interval, $timeout, $http) {
+// app.controller('beepController',  function($scope, $cookies, $interval, $timeout){
 
 var audio = new window.AudioContext();
 
@@ -71,9 +72,8 @@ function tracker (){
         // this.timer = $interval( () => {this.playBeat();}, (60 / this.bpm * 250) );
         //console.log("called: " + (tracker.bpm / 60 * 1000));
     },
-    //this.stop = () => {clearInterval(this.timer)};
     this.stop = () => {
-        $interval.cancel(this.timer);
+        $timeout.cancel(this.timer);
         this.isPlaying = false;
         this.tracks.forEach( (t) => {
             t.curBeat = 0;
@@ -313,7 +313,14 @@ console.log(this.numBeatArr);
 
     this.loadTracker = (config) => {
 
-        this.tracker.loadTracks(config);
+
+        var THIS = this;
+        var mainInfo = null;
+        $http.get('http://danielmurphy.org/beep/php/test.json').then(function(data) {
+            mainInfo = data;
+            console.log(mainInfo);
+            THIS.tracker.loadTracks(data.data);
+        });
         
     };
 
@@ -323,10 +330,28 @@ console.log(this.numBeatArr);
             bpm: this.tracker.getBpm()
         };
         this.tempTracker = config;
-    };  
+
+        // $cookies.putObject('savedConfig', config);
+
+        var data = {
+            'name':'admin',
+            'pass':'admin'
+            }
+        var dataString = JSON.stringify(config);
+         $cookies.putObject('config',config);
+
+
+        $http.post('http://danielmurphy.org/beep/php/beep.php', JSON.stringify(config)).then(function(response){
+            console.log(response.data);
+        },function(){console.log("error");});
+
+    };
+
+
+
 
 //end beepController
-} );
+}] );
 
 
 
