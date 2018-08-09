@@ -308,41 +308,61 @@ console.log(this.numBeatArr);
 	    value: 10
     };
 
-    this.tempTracker = {};
+    // this.tempTracker = {};
 
 
-    this.loadTracker = (config) => {
+
+    this.loadTracker = () => {
 
 
         var THIS = this;
-        var mainInfo = null;
-        $http.get('http://danielmurphy.org/beep/php/test.json').then(function(data) {
-            mainInfo = data;
-            console.log(mainInfo);
-            THIS.tracker.loadTracks(data.data);
-        });
+
+        var id = $cookies.getObject('beepId');
+        
+
+        if(id != null ){
+            var data = {'id': id}
+            $http.post('http://danielmurphy.org/beep/php/loadBeep.php', data).then(function(response){
+                console.log("there was a response: ");
+                console.log(response);
+                THIS.tracker.loadTracks(response.data);
+            }, function(){console.log("error");});
+        }
+
+
         
     };
 
+    this.loadTracker();
+
     this.saveTracker = () => {
+
+        var id = $cookies.getObject('beepId');
+
+        console.log("id is: " + id);
+
+        if(id == null){
+            console.log("assign default id");
+            id = 0;
+        }
         var config = {
+            id : id,
             tracks: this.tracker.getTracksData(),
             bpm: this.tracker.getBpm()
         };
-        this.tempTracker = config;
-
-        // $cookies.putObject('savedConfig', config);
-
-        var data = {
-            'name':'admin',
-            'pass':'admin'
-            }
-        var dataString = JSON.stringify(config);
-         $cookies.putObject('config',config);
 
 
-        $http.post('http://danielmurphy.org/beep/php/beep.php', JSON.stringify(config)).then(function(response){
-            console.log(response.data);
+
+        $http.post('http://danielmurphy.org/beep/php/saveBeep.php', JSON.stringify(config)).then(function(response){
+            var expireDate = new Date();
+            expireDate.setTime(2144232732000);
+            var data = response.data;
+            var newId = data.id;
+            $cookies.put('beepId', newId, {
+                expires: expireDate
+            });
+            console.log("Success: ");
+            console.log(data);
         },function(){console.log("error");});
 
     };
